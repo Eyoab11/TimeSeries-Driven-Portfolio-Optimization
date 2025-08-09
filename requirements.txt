@@ -1,0 +1,26 @@
+
+# Core Libraries
+pandas
+numpy
+scikit-learn
+
+# Data Source
+yfinance
+
+# Time Series Modeling
+statsmodels
+pmdarima
+tensorflow
+
+# Portfolio Optimization
+PyPortfolioOpt
+
+# Visualization
+matplotlib
+seaborn
+
+# Utilities & Quality
+jupyterlab
+black
+flake8
+pytest
