@@ -246,3 +246,46 @@ The optimization yielded a clear, albeit aggressive, recommendation. Both the Mi
 The optimizer's decision to go "all-in" on TSLA is a direct mathematical consequence of the inputs. The **LSTM's optimistic 19.57% expected return for TSLA was so dominant** that, even when factoring in its high volatility (~59%), its risk-adjusted return dwarfed that of SPY and BND. From a purely mathematical standpoint based on our forecast, adding the lower-return assets would have diluted the portfolio's performance without providing a sufficient diversification benefit to offset the loss in returns.
 
 This result underscores a critical lesson: **an optimizer is only as good as its inputs.** The aggressive allocation is not an error but an insight into the strength of our LSTM model's conviction. The crucial next step, **Task 5: Backtesting**, will be essential to validate whether this forecast-driven, aggressive strategy would have performed well in the real world.
+
+---
+
+## Task 5: Strategy Backtesting & Validation
+The final and most critical phase of the project was to conduct a historical backtest to validate the performance of our forecast-driven, MPT-optimized strategy. A hypothesis is only valuable if it can be tested against reality.
+
+### 5.1. Backtest Setup
+-   **Backtesting Period:** August 1, 2024, to July 31, 2025.
+-   **"Your Strategy":** A portfolio holding the Maximum Sharpe Ratio weights derived in Task 4 (~99.96% TSLA).
+-   **Benchmark Strategy:** A traditional, balanced portfolio with a static 60% allocation to SPY and 40% to BND.
+-   **Methodology:** A "buy and hold" simulation was run, calculating the cumulative growth of a $1 initial investment for both portfolios over the one-year period.
+
+### 5.2. Performance Comparison
+The backtest revealed a classic trade-off between high risk and high reward.
+
+#### Key Visualization
+The plot below vividly illustrates the volatile journey of the optimized strategy compared to the steady growth of the benchmark.
+
+![Backtest Performance](reports/figures/06_backtest_performance.png)
+
+#### Performance Metrics
+
+| Metric | **Your Optimized Strategy** | Benchmark (60/40) |
+| :--- | :--- | :--- |
+| **Total Return** | **37.48%** | 11.68% |
+| **Annualized Sharpe Ratio**| 0.77 | **0.80** |
+
+### 5.3. Final Conclusion & Project Summary
+The backtest provides a clear verdict on the viability of the proposed strategy:
+
+1.  **Outperformance in Absolute Returns:** The aggressive, forecast-driven strategy, with its heavy concentration in TSLA, **significantly outperformed the benchmark in terms of total return (37.48% vs. 11.68%)**. This validates that the LSTM model's optimistic forecast was directionally correct for this period, and the strategy successfully capitalized on TSLA's growth.
+
+2.  **Underperformance in Risk-Adjusted Returns:** Despite the higher returns, the strategy's Sharpe Ratio (0.77) was **slightly lower than the benchmark's (0.80)**. The extreme volatility and severe drawdowns experienced by the strategy penalized its risk-adjusted performance. This demonstrates that while the strategy was profitable, it came with a level of risk that may not be suitable for all investors.
+
+**Overall Recommendation for GMF Investments:**
+This project successfully demonstrates a powerful end-to-end quantitative workflow. The LSTM-driven MPT strategy proved capable of generating significant alpha. However, the backtest highlights that the raw, unconstrained output of the optimizer leads to a highly concentrated and volatile portfolio.
+
+For real-world deployment, GMF should adopt this framework but introduce **constraints and enhancements**:
+-   **Implement Constraints:** Add constraints to the MPT optimizer to enforce diversification (e.g., set a maximum allocation of 30% to any single asset).
+-   **Dynamic Rebalancing:** Develop a rebalancing strategy (e.g., quarterly) to lock in gains and adjust to new forecasts.
+-   **Expand Asset Universe:** Incorporate more assets to provide the optimizer with better diversification opportunities.
+
+This project serves as a successful proof-of-concept for leveraging advanced forecasting in portfolio management and provides a clear, data-driven path toward developing a sophisticated and high-performing investment strategy.
