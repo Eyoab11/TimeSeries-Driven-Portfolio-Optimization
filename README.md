@@ -202,3 +202,47 @@ The resulting forecast clearly shows the expected trend and the escalating uncer
 2.  **Uncertainty Quantification:** The 95% confidence interval (the light green band) provides a crucial insight into the model's confidence. The band is relatively narrow in the near term but **widens significantly over the 12-month horizon.**
 
 3.  **Actionable Business Insight:** This widening band is a clear, data-driven visualization of **forecast decay**. It strongly indicates that while the model expects positive returns, the long-term risk and range of possible outcomes are substantial. This finding reinforces the need to balance TSLA with more stable assets and cautions against over-reliance on long-term point-forecasts. The forecast should be treated as a directional guide with a quantified risk profile, not a precise price target.
+
+---
+
+## Task 4: Portfolio Optimization with Modern Portfolio Theory (MPT)
+The final stage of the strategy development was to integrate the insights from our forecasting and historical analysis into a mathematically optimized portfolio. The goal was to find the optimal allocation of capital across TSLA, BND, and SPY to maximize risk-adjusted returns.
+
+### 4.1. Inputs for the Optimizer
+The optimization was grounded in the principles of Modern Portfolio Theory (MPT) using the `PyPortfolioOpt` library. The two critical inputs were:
+
+1.  **Expected Annual Returns:**
+    *   **TSLA:** **19.57%** (derived from our high-performing LSTM model's one-year forecast).
+    *   **BND:** **1.83%** (derived from historical mean returns).
+    *   **SPY:** **13.67%** (derived from historical mean returns).
+2.  **Covariance Matrix:**
+    *   The annualized sample covariance of historical returns was calculated from the closing prices of all three assets. This matrix quantifies the risk and correlation between the assets.
+
+### 4.2. The Efficient Frontier
+Using these inputs, the Efficient Frontier was generated. This curve represents the set of optimal portfolios that offer the highest expected return for a given level of risk. Two key portfolios on this frontier were identified:
+
+1.  **The Minimum Volatility Portfolio:** The portfolio with the lowest possible risk.
+2.  **The Maximum Sharpe Ratio Portfolio:** The single portfolio that offers the best possible return for the amount of risk taken (the "tangency portfolio").
+
+#### Key Visualization
+The plot below shows the Efficient Frontier, the risk/return profile of the individual assets, and the location of our two key optimized portfolios.
+
+![Efficient Frontier](reports/figures/05_efficient_frontier.png)
+
+### 4.3. Recommended Portfolio and Key Insights
+The optimization yielded a clear, albeit aggressive, recommendation. Both the Minimum Volatility and Maximum Sharpe Ratio portfolios converged on a strategy that heavily allocates capital to TSLA.
+
+**Final Recommended Portfolio (Maximum Sharpe Ratio):**
+-   **Optimal Asset Weights:**
+    -   **TSLA: 99.96%**
+    -   **BND: 0.00%**
+    -   **SPY: 0.04%**
+-   **Expected Performance Metrics:**
+    -   **Expected Annual Return:** 19.57%
+    -   **Annual Volatility (Risk):** 59.16%
+    -   **Sharpe Ratio:** 0.30
+
+**Interpretation of the Result:**
+The optimizer's decision to go "all-in" on TSLA is a direct mathematical consequence of the inputs. The **LSTM's optimistic 19.57% expected return for TSLA was so dominant** that, even when factoring in its high volatility (~59%), its risk-adjusted return dwarfed that of SPY and BND. From a purely mathematical standpoint based on our forecast, adding the lower-return assets would have diluted the portfolio's performance without providing a sufficient diversification benefit to offset the loss in returns.
+
+This result underscores a critical lesson: **an optimizer is only as good as its inputs.** The aggressive allocation is not an error but an insight into the strength of our LSTM model's conviction. The crucial next step, **Task 5: Backtesting**, will be essential to validate whether this forecast-driven, aggressive strategy would have performed well in the real world.
