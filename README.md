@@ -177,3 +177,28 @@ The models were evaluated on the test set using Mean Absolute Error (MAE), Root 
 
 ### Conclusion from Task 2
 The **LSTM model significantly outperformed the ARIMA model** across all evaluation metrics. Its ability to learn complex, non-linear patterns from the historical data allowed it to capture the volatility and price movements of TSLA with much greater accuracy. Therefore, the LSTM model's forecasts will be used as the primary input for the portfolio optimization stage in Task 3.
+
+---
+
+## Task 3: Future Market Trend Forecasting
+With the high-performing LSTM model identified, the next step was to generate a multi-year forecast for TSLA to inform our portfolio strategy. A key objective was not just to predict a single price path, but also to quantify the model's uncertainty over time.
+
+### 3.1. Forecasting with Monte Carlo (MC) Dropout
+To estimate uncertainty, a **Monte Carlo (MC) Dropout** technique was implemented. This involved:
+1.  Running the LSTM model for **100 simulation runs** to generate a distribution of possible future price paths.
+2.  During each prediction step, the model's dropout layers were kept active, which introduces stochasticity and mimics model uncertainty.
+3.  From this distribution of 100 simulated forecasts, the mean forecast and a 95% confidence interval were calculated.
+
+### 3.2. One-Year Forecast for TSLA
+The model was used to forecast TSLA's stock price for the next 252 trading days (approximately one year).
+
+#### Key Visualization
+The resulting forecast clearly shows the expected trend and the escalating uncertainty over the forecast horizon.
+![LSTM Future Forecast](reports/figures/04_lstm_future_forecast.png)
+
+### 3.3. Interpretation and Key Insights
+1.  **Expected Trend:** The mean forecast (dashed green line) projects a positive upward trend for TSLA over the next year, rising from current levels to approximately $380. This will serve as our "expected return" for TSLA in the portfolio optimization task.
+
+2.  **Uncertainty Quantification:** The 95% confidence interval (the light green band) provides a crucial insight into the model's confidence. The band is relatively narrow in the near term but **widens significantly over the 12-month horizon.**
+
+3.  **Actionable Business Insight:** This widening band is a clear, data-driven visualization of **forecast decay**. It strongly indicates that while the model expects positive returns, the long-term risk and range of possible outcomes are substantial. This finding reinforces the need to balance TSLA with more stable assets and cautions against over-reliance on long-term point-forecasts. The forecast should be treated as a directional guide with a quantified risk profile, not a precise price target.
