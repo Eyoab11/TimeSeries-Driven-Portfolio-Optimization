@@ -3,6 +3,7 @@
 pandas
 numpy
 scikit-learn
+joblib
 
 # Data Source
 yfinance
